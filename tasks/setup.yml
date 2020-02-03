@@ -1,0 +1,23 @@
+---
+
+- name: create databases
+  mysql_db:
+    name: "{{ item.name }}"
+    login_user: "{{ root_user }}"
+    login_password: "{{ root_password }}"
+    login_unix_socket: "{{ percona_socket }}"
+    state: present
+  with_items: "{{ percona_databases }}"
+
+- name: create users
+  mysql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    host: "{{ item.host|default('localhost') }}"
+    priv: "{{ item.priv }}"
+    append_privs: "{{ item.append_privs|default('no') }}"
+    login_user: "{{ root_user }}"
+    login_password: "{{ root_password }}"
+    login_unix_socket: "{{ percona_socket }}"
+    state: present
+  with_items: "{{ percona_users }}"

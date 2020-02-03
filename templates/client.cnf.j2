@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+#
+# The Percona XtraDB Cluster 5.7 configuration file.
+#
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+#   Please make any edits and changes to the appropriate sectional files
+#   included below.
+#
+
+[client]
+port            = {{ percona_port }}
+socket          = {{ percona_socket }}

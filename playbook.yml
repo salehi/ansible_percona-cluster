@@ -1,0 +1,5 @@
+---
+- name: Percona Cluster
+  hosts: percona-cluster
+  roles:
+    - salehi.ansible_percona-cluster

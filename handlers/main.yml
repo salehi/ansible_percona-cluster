@@ -1,0 +1,46 @@
+---
+
+- name: stop percona master node
+  service:
+    name: "{{ percona_service }}"
+    state: stopped
+  when:
+    - percona_bind_address == percona_master_node
+
+- name: stop percona slave node
+  service:
+    name: "{{ percona_service }}"
+    state: stopped
+  when:
+    - percona_bind_address != percona_master_node
+
+- name: start percona master node bootstrap-pxc
+  command: /etc/init.d/mysql bootstrap-pxc
+  when:
+    - percona_bind_address == percona_master_node
+    - ansible_os_family == "Debian"
+
+- name: start percona master node
+  service:
+    name: "{{ percona_service }}"
+    state: started
+  when:
+    - percona_bind_address == percona_master_node
+
+- name: create sst user
+  mysql_user:
+    login_user: "{{ root_user }}"
+    login_password: "{{ root_password }}"
+    login_unix_socket: "{{ percona_socket }}"
+    user: "{{ percona_sst_user }}"
+    password: "{{ percona_sst_password }}"
+    priv: "*.*:grant,reload,lock tables,process,replication client"
+  when:
+    - percona_bind_address == percona_master_node
+
+- name: start percona slave node
+  service:
+    name: "{{ percona_service }}"
+    state: started
+  when:
+    - percona_bind_address != percona_master_node

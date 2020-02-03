@@ -1,0 +1,24 @@
+---
+
+- name: add apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ percona_repo_gpgkey }}"
+
+- name: repository installation
+  apt_repository:
+    filename: "{{ percona_repo_filename }}"
+    repo: "{{ percona_repo_baseurl }}"
+
+- name: update cache
+  apt:
+    update_cache: yes
+  changed_when: false
+
+- name: install packages
+  apt:
+    name:
+      - "percona-xtradb-cluster-{{ percona_version }}"
+      - "python-pymysql"
+      - "python3-mysqldb"
+    state: present

@@ -1,0 +1,66 @@
+# {{ ansible_managed }}
+
+#
+# The Percona XtraDB Cluster 5.7 configuration file.
+#
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+#   Please make any edits and changes to the appropriate sectional files
+#   included below.
+#
+
+[mysqld]
+server_id           = {{ percona_server_id }}
+user                = {{ percona_user }}
+bind-address        = {{ percona_bind_address }}
+pid-file            = {{ percona_pid_file }}
+socket              = {{ percona_socket }}
+port                = {{ percona_port }}
+basedir             = {{ percona_basedir }}
+datadir             = {{ percona_datadir }}
+tmpdir              = {{ percona_tmpdir }}
+lc-messages-dir     = {{ percona_lc_messages_dir }}
+log-bin             = {{ percona_log_bin }}
+log-error           = {{ percona_log_error }}
+log_error_verbosity = {{ percona_log_error_verbosity }}
+expire_logs_days    = {{ percona_expire_logs_days }}
+sync_binlog         = {{ percona_sync_binlog }}
+
+# Recommended in standard MySQL setup
+sql_mode            = {{ percona_sql_mode }}
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links      = {{ percona_symbolic_links }}
+
+explicit_defaults_for_timestamp
+
+bulk_insert_buffer_size         = {{ percona_bulk_insert_buffer_size }}
+general_log                     = {{ percona_general_log }}
+general_log_file                = {{ percona_general_log_file }}
+innodb_autoextend_increment     = {{ percona_innodb_autoextend_increment }}
+innodb_buffer_pool_size         = {{ percona_innodb_buffer_pool_size }}
+innodb_file_per_table           = {{ percona_innodb_file_per_table }}
+innodb_flush_log_at_trx_commit  = {{ percona_innodb_flush_log_at_trx_commit }}
+innodb_flush_method             = {{ percona_innodb_flush_method }}
+innodb_lock_wait_timeout        = {{ percona_innodb_lock_wait_timeout }}
+innodb_thread_concurrency       = {{ percona_innodb_thread_concurrency }}
+join_buffer_size                = {{ percona_join_buffer_size }}
+log_bin_trust_function_creators = {{ percona_log_bin_trust_function_creators }}
+log_queries_not_using_indexes   = {{ percona_log_queries_not_using_indexes }}
+max_allowed_packet              = {{ percona_max_allowed_packet }}
+max_connections                 = {{ percona_max_connections }}
+max_heap_table_size             = {{ percona_max_heap_table_size }}
+myisam_max_sort_file_size       = {{ percona_myisam_max_sort_file_size }}
+myisam_repair_threads           = {{ percona_myisam_repair_threads }}
+myisam_sort_buffer_size         = {{ percona_myisam_sort_buffer_size }}
+net_read_timeout                = {{ percona_net_read_timeout }} 
+net_write_timeout               = {{ percona_net_write_timeout }}
+query_cache_limit               = {{ percona_query_cache_limit }}
+query_cache_size                = {{ percona_query_cache_size }}
+read_buffer_size                = {{ percona_read_buffer_size }}
+read_rnd_buffer_size            = {{ percona_read_rnd_buffer_size }}
+slow_query_log                  = {{ percona_slow_query_log }}
+slow_query_log_file             = {{ percona_slow_query_log_file }}
+thread_cache_size               = {{ percona_thread_cache_size }}
+tmp_table_size                  = {{ percona_tmp_table_size }}

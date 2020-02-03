@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+{% set cluster_members = [] %}
+{% for host in play_hosts %}
+  {% set _ = cluster_members.append(hostvars[host]['ansible_' + percona_bind_interface]['ipv4']['address']) %}
+{% endfor %}
+
+[mysqld]
+binlog_format                   = {{ percona_binlog_format }}
+default_storage_engine          = {{ percona_default_storage_engine }}
+innodb_autoinc_lock_mode        = {{ percona_innodb_autoinc_lock_mode }}
+pxc_strict_mode                 = {{ percona_pxc_strict_mode }}
+wsrep_cluster_address           = gcomm://{{",".join(cluster_members)}}
+wsrep_cluster_name              = {{ percona_wsrep_cluster_name }}
+wsrep_log_conflicts
+wsrep_node_address              = {{ percona_bind_address }}
+wsrep_node_name                 = {{ percona_node_hostname }}
+wsrep_provider                  = {{ percona_wsrep_provider }}
+wsrep_slave_threads             = {{ percona_wsrep_slave_threads }}
+wsrep_sst_auth                  = "{{ percona_sst_user }}:{{ percona_sst_password }}"
+wsrep_sst_method                = {{ percona_wsrep_sst_method }}

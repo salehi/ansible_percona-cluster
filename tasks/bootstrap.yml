@@ -1,0 +1,20 @@
+---
+
+- name: generate configuration
+  template:
+    src:  "{{ item }}.cnf.j2"
+    dest: "{{ percona_config_dir }}/{{ item }}.cnf"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - "client"
+    - "mysqld"
+    - "mysqld_safe"
+    - "wsrep"
+  notify:
+    - stop percona master node
+    - start percona master node bootstrap-pxc
+    - create sst user
+    - stop percona slave node
+    - start percona slave node
